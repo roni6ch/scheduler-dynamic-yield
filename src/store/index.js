@@ -41,9 +41,28 @@ const newUserReducer = (state = newUserState, action) => {
       return state;
   }
 };
+
+
+const calendarEventsState = {
+  date:"",
+  name:""
+};
+const calendarEventsReducer = (state = calendarEventsState, action) => {
+switch (action.type) {
+  case "SET_NEW_SCHEDUALE":
+          return { ...state, date: action.data };
+          case "SET_NEW_EVENT_NAME":
+            return { ...state, name: action.data };
+    
+          default:
+    return state;
+}
+};
+
 const reducers = combineReducers({
   authReducer,
-  newUserReducer
+  newUserReducer,
+  calendarEventsReducer
 });
 const store = createStore(
   reducers,
