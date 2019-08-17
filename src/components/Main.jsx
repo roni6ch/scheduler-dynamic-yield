@@ -32,12 +32,14 @@ class Main extends Component {
   };
 
   render() {
+    const { user } = this.props;
     return (
       <React.Fragment>
         <Header />
         <BrowserRouter>
         <MDBContainer>
-          <MDBNav className="nav-tabs mt-5">
+      <p className="hello">Hello <span className="bold">{user.name}</span></p>
+          <MDBNav className="nav-tabs mt-4">
             <MDBNavItem>
               <MDBNavLink
                 to="#"
@@ -76,6 +78,7 @@ class Main extends Component {
 
 
 const mapStateToProps = state => ({
+  user : state.authReducer
   });
   
   const mapDispatchToProps = dispatch => {

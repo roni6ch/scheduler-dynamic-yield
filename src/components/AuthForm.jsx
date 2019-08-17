@@ -12,13 +12,56 @@ import {
   MDBInput
 } from "mdbreact";
 
+const serverUrl = "http://localhost:8000";
 class AuthForm extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+    error:false,
+    }
+  }
+  componentDidMount() {
+    //if already loggen in - stay connected
+    let checkloggedIn = localStorage.getItem("loggedIn");
+    if (checkloggedIn !== null && checkloggedIn === "true") {
+      //no need to go to server- client already connected
+      this.props.LOGGED_IN(true);
+    }
+  }
+
   handleSubmit = e => {
     e.preventDefault();
-    this.props.LOGGED_IN(true);
-    console.log('handleSubmit - todo: check if password match in db and login or error');
+    const { email, password } = this.props;
+    let data = {
+      email,
+      password
+    };
+    this.setState({error:false});
+    fetch(`${serverUrl}/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (!data.error) {
+          localStorage.setItem("user", JSON.stringify(data));
+          this.props.LOGGED_IN(true);
+          this.props.SET_USER_DETAILS(data);
+          console.log(data);
+        }
+        else{
+          //error
+          this.setState({error:data})
+        }
+      })
+      .catch(error => console.error(error))
   };
   render() {
+    const {error} = this.state;
     return (
       <div>
         <MDBContainer className="loginWrapper">
@@ -41,6 +84,7 @@ class AuthForm extends React.Component {
                         error="wrong"
                         success="right"
                         onChange={e => this.props.CHANGE_EMAIL(e)}
+                        onClick={e => this.setState({error:false})}
                       />
                       <MDBInput
                         label="Type your password"
@@ -48,8 +92,10 @@ class AuthForm extends React.Component {
                         type="password"
                         validate
                         onChange={e => this.props.CHANGE_PASSWORD(e)}
+                        onClick={e => this.setState({error:false})}
                       />
                     </div>
+                    {error && <p className="authError">{error.error}</p>}
                     <div className="text-center mt-4">
                       <MDBBtn color="light-blue" className="mb-3" type="submit">
                         Login
@@ -67,13 +113,18 @@ class AuthForm extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  loggedIn: state.authReducer.loggedIn
+  loggedIn: state.authReducer.loggedIn,
+  email: state.authReducer.email,
+  password: state.authReducer.password
 });
 
 const mapDispatchToProps = dispatch => {
   return {
     LOGGED_IN: bool => {
       dispatch({ type: "LOGGED_IN", data: bool });
+    },
+    SET_USER_DETAILS: data => {
+      dispatch({ type: "SET_USER_DETAILS", data: data });
     },
     CHANGE_EMAIL: e => {
       dispatch({

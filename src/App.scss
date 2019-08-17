@@ -1,10 +1,12 @@
 .App {
   .default-color {
-        background-color: #33b5e5 !important;
+    background-color: #33b5e5 !important;
   }
-  .btn-default{ background-color: transparent !important;}
-  .loginWrapper{
-    margin:10% auto;
+  .btn-default {
+    background-color: transparent !important;
+  }
+  .loginWrapper {
+    margin: 10% auto;
   }
   .form-header {
     box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18),
@@ -17,14 +19,44 @@
   .loginCol {
     margin: 0 auto;
   }
-  .navbar .nav-item .nav-link.signOut{
-    padding-left:100px;
+  .navbar .nav-item .nav-link.signOut {
+    padding-left: 100px;
   }
-  .navbar .nav-item .nav-link.signOut button{
+  .navbar .nav-item .nav-link.signOut button {
     box-shadow: none;
-    padding:0px;
+    padding: 0px;
   }
-  .fa-sign-out-alt{
+  .fa-sign-out-alt {
     font-size: 18px;
   }
+  .modal {
+    .fa-calendar {
+      font-size: 28px;
+    }
+    .date {
+      margin-left: 10px;
+    }
+  }
+  .roomNames {
+    font-weight: bold;
+  }
+  .authError {
+    color: red;
+    text-align: center;
+    margin-top: -24px;
+  }
+  .message{
+    color: red;
+    text-align: center;
+  }
+  .hello{margin: 10px 0px 0px;
+    font-size: 20px;}
+    .bold{font-weight: 500}
+    .fc-content{
+      text-align:center;
+    }
+    .fc-content span{
+      width:100%;
+      display: inline-block;
+    }
 }

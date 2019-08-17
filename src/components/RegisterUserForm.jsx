@@ -1,13 +1,48 @@
 import React from "react";
 import { connect } from "react-redux";
 
+const serverUrl = "http://localhost:8000";
 class AuthForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      signUser:'',
+    }
+  }
   handleSubmitNewUser = e => {
     e.preventDefault();
-    console.log('handleSubmitNewUser - todo: clean reducer and send to db');
+    this.setState({signUser:false})
+    const { newUser } = this.props;
+    let data = {
+      name : newUser.name,
+      family : newUser.family,
+      email : newUser.email,
+      password : newUser.password
+    };
+    fetch(`${serverUrl}/signUser`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (!data.error) {
+          this.setState({signUser: 'User created successfully!'});
+        }
+        else{
+          //error
+          this.setState({signUser: data.error});
+          console.log('error: ',data);
+        }
+      })
+      .catch(error => console.error('error2: ',error))
   };
   render() {
     const { newUser } = this.props;
+    const { signUser } = this.state;
+    
     return (
         <form className="text-center border border-light p-5" onSubmit={this.handleSubmitNewUser}>
         <p className="h4 mb-4">Sign up new User</p>
@@ -21,7 +56,8 @@ class AuthForm extends React.Component {
         </div>
         <input type="email" className="form-control mb-4" placeholder="E-mail" value={newUser.email}   onChange={e => this.props.ADD_NEW_USER_EMAIL(e)}/>
         <input type="password"  className="form-control" placeholder="Password" value={newUser.password}   onChange={e => this.props.ADD_NEW_USER_PASSWORD(e)} />
-        <button className="btn btn-info my-4 btn-block" type="submit">Sign in</button>
+        <button className="btn btn-info my-4 btn-block" type="submit">Sign new User</button>
+        <p className="message">{signUser}</p>
     </form>
     );
   }
@@ -56,7 +92,12 @@ const mapDispatchToProps = dispatch => {
         type: "ADD_NEW_USER_PASSWORD",
         data: e.target.value
       });
-    }
+    },
+    INIT_NEW_USER: () => {
+      dispatch({
+        type: "INIT_NEW_USER"
+      });
+    },
   };
 };
 
