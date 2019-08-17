@@ -1,9 +1,11 @@
 const schemas = require("./schemas");
 const UserModel = schemas.UserModel;
 const EventsModel = schemas.EventsModel;
+const bcrypt = require("bcrypt");
 
 const login = async (email, password) => {
   let result;
+  let resAfterPasswordCompare;
   try {
     result = await UserModel.find({ email: email }).limit(1);
   } catch (e) {
@@ -11,19 +13,25 @@ const login = async (email, password) => {
   }
   if (result.length === 0) {
     throw "User Not Found";
-  } else if (password === result[0].password) return result[0];
-  else throw "Incorrect Password";
+  }
+  let hashPassword = await bcrypt.hashSync(password, 10);
+  await bcrypt.compare(hashPassword, result[0].password, function(err, res) {
+    if (err) {
+      throw "Incorrect Password";
+    }
+    resAfterPasswordCompare = result[0];
+  });
+
+  return resAfterPasswordCompare;
 };
 const signUser = async (name, family, email, password) => {
   let result;
   try {
     result = await UserModel.create({ name, family, email, password });
   } catch (e) {
-    console.log('e',e);
     throw "User already exist";
   }
   if (result.length === 0) {
-    console.log('result',result);
     throw false;
   }
   return true;

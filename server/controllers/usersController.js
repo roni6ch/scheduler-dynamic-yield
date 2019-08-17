@@ -2,6 +2,7 @@
 const DAO = require("../dao/DAO");
 const HttpStatus = require('http-status-codes');
 const validate = require('../validations/validations');
+const bcrypt = require('bcrypt');
 
 const login = async (req, res) => {
     if (validate.checkValidation(req.body)) {
@@ -9,6 +10,7 @@ const login = async (req, res) => {
             const data = req.body;
             userData = await DAO.login(data.email,data.password);
          } catch (error) {
+             console.log(error);
             return res.status(HttpStatus.FORBIDDEN).send({ 'error':error });
         }
         return res.status(HttpStatus.OK).json(userData);
@@ -17,12 +19,12 @@ const login = async (req, res) => {
 };
 const signUser = async (req, res) => {
     if (validate.checkValidation(req.body)) {
-        debugger;
         try { 
             const data = req.body;
-            userData = await DAO.signUser(data.name,data.family,data.email,data.password);
+            let hashPassword = await bcrypt.hashSync(req.body.password, 10);
+              userData = await DAO.signUser(data.name,data.family,data.email,hashPassword);
          } catch (error) {
-            return res.status(HttpStatus.BAD_REQUEST).send({ 'error':error });
+            return res.status(HttpStatus.CONFLICT).send({ 'error':error });
         }
         return res.status(HttpStatus.OK).json(userData);
     }
