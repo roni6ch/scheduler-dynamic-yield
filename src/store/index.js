@@ -1,5 +1,4 @@
 import { combineReducers, createStore } from "redux";
-
 const authState = {
   loggedIn: false,
   name: "",
@@ -12,6 +11,7 @@ const authReducer = (state = authState, action) => {
     case "LOGGED_IN":
       localStorage.setItem("loggedIn", action.data);
       if (!action.data) {
+        //user logged out
         localStorage.removeItem("user");
         return {
           ...state,

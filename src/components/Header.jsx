@@ -17,7 +17,9 @@ class Header extends Component {
       <Router>
         <MDBNavbar color="default-color" dark expand="md">
           <MDBNavbarBrand>
-            <a href="/"><strong className="white-text">Scheduler</strong></a>
+            <a href="/">
+              <strong className="white-text">Scheduler</strong>
+            </a>
           </MDBNavbarBrand>
           <MDBNavbarNav right>
             <MDBNavItem>

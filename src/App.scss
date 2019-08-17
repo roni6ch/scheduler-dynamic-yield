@@ -48,15 +48,41 @@
   .message{
     color: red;
     text-align: center;
+    height:24px;
   }
   .hello{margin: 10px 0px 0px;
     font-size: 20px;}
     .bold{font-weight: 500}
     .fc-content{
-      text-align:center;
+     margin-left:2px;
     }
     .fc-content span{
       width:100%;
       display: inline-block;
     }
+    .fa-clock{
+      font-size:25px;
+    }
+    .fc-toolbar.fc-header-toolbar{
+      margin-top: 10px;
+    }
+    footer.page-footer{
+    bottom: 0;
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+    }
+    .calendarWrapper{
+    margin-bottom: 100px;
+    }
+    .fc-scroller.fc-time-grid-container {
+      height: auto!important;
+      overflow-y: auto;
+  }
+  .roomsButtons{
+    width:100%;
+  }
+  .roomsButtons button{opacity: 0.5}
+  .roomsButtons button:hover{opacity: 0.75}
+  .roomsButtons button.active{opacity: 1}
 }

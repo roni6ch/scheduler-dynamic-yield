@@ -1,6 +1,7 @@
 
 const DAO = require("../dao/DAO");
 const HttpStatus = require('http-status-codes');
+const validate = require('../validations/validations');
 
 const getEvents = async (req, res) => {
         try { 
@@ -11,9 +12,7 @@ const getEvents = async (req, res) => {
         return res.status(HttpStatus.OK).json(events);
 };
 const addEvent = async (req, res) => {
-    if (typeof(req.body.title) !== "undefined" && typeof(req.body.room) !== "undefined" &&
-    typeof(req.body.backgroundColor) !== "undefined" && typeof(req.body.start) !== "undefined" &&
-    typeof(req.body.end) !== "undefined" && typeof(req.body.author) !== "undefined") {
+    if (validate.checkValidation(req.body)) {
         try { 
             events = await DAO.addEvent(req.body);
          } catch (error) {
@@ -21,12 +20,11 @@ const addEvent = async (req, res) => {
         }
         return res.status(HttpStatus.OK).json(events);
     }
+    return res.send({ 'error':'Please fill all the fields' });
 };
 
 const editEvent = async (req, res) => {
-    if (typeof(req.body.id) !== "undefined" && typeof(req.body.title) !== "undefined" && typeof(req.body.room) !== "undefined" &&
-    typeof(req.body.backgroundColor) !== "undefined" && typeof(req.body.start) !== "undefined" &&
-    typeof(req.body.end) !== "undefined" && typeof(req.body.author) !== "undefined") {
+    if (validate.checkValidation(req.body)) {
         try { 
             events = await DAO.editEvent(req.body);
          } catch (error) {
@@ -34,6 +32,7 @@ const editEvent = async (req, res) => {
         }
         return res.status(HttpStatus.OK).json(events);
     }
+    return res.send({ 'error':'There is a problem editing this event' });
 };
 const deleteEvent = async (req, res) => {
     if (typeof(req.body.id) !== "undefined") {
@@ -44,6 +43,7 @@ const deleteEvent = async (req, res) => {
         }
         return res.status(HttpStatus.OK).json(result);
     }
+    return res.send({ 'error':'There is a problem deleting this event' });
 };
 
 

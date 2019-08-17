@@ -1,9 +1,10 @@
 
 const DAO = require("../dao/DAO");
 const HttpStatus = require('http-status-codes');
+const validate = require('../validations/validations');
 
 const login = async (req, res) => {
-    if (typeof(req.body.email) !== "undefined" && typeof(req.body.password) !== "undefined") {
+    if (validate.checkValidation(req.body)) {
         try { 
             const data = req.body;
             userData = await DAO.login(data.email,data.password);
@@ -12,10 +13,11 @@ const login = async (req, res) => {
         }
         return res.status(HttpStatus.OK).json(userData);
     }
+    return res.status(HttpStatus.FORBIDDEN).send({ 'error':'Please fill all the fields' });
 };
 const signUser = async (req, res) => {
-    if (typeof(req.body.name) !== "undefined" && typeof(req.body.family) !== "undefined" &&
-        typeof(req.body.email) !== "undefined" && typeof(req.body.password) !== "undefined") {
+    if (validate.checkValidation(req.body)) {
+        debugger;
         try { 
             const data = req.body;
             userData = await DAO.signUser(data.name,data.family,data.email,data.password);
@@ -24,6 +26,7 @@ const signUser = async (req, res) => {
         }
         return res.status(HttpStatus.OK).json(userData);
     }
+    return res.status(HttpStatus.FORBIDDEN).send({ 'error':'Please fill all the fields' });
 };
 
 module.exports = {

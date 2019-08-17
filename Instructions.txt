@@ -1,0 +1,11 @@
+How to run the Client
+---------------------
+In another terminal, navigate to the client directory (this Directory).
+Run npm install to install all dependencies.
+Run npm start to start the app
+
+How to run the API
+------------------
+In your terminal, navigate to the "server" directory.
+Run npm install to install all dependencies.
+Run npm start to start the app.
