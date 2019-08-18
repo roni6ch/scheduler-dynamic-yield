@@ -252,9 +252,9 @@ class Calendar extends React.Component {
 
 <MDBBtnGroup size="sm" className="mb-4 roomsButtons">
         <MDBBtn color="indigo" onClick={() => this.filterRooms('ALL')} className={ filteredRoom === 'ALL' && 'active' }>ALL Rooms</MDBBtn>
-        <MDBBtn color="primary" onClick={() => this.filterRooms('A')}  className={ filteredRoom === 'A' && 'active' }>A Rooms</MDBBtn>
-        <MDBBtn color="success" onClick={() => this.filterRooms('B')}  className={ filteredRoom === 'B' && 'active' }>B Rooms</MDBBtn>
-        <MDBBtn color="warning" onClick={() => this.filterRooms('C')}  className={ filteredRoom === 'C' && 'active'}>C Rooms</MDBBtn>
+        <MDBBtn color="primary" onClick={() => this.filterRooms('A')}  className={ filteredRoom === 'A' && 'active' }>A Room</MDBBtn>
+        <MDBBtn color="success" onClick={() => this.filterRooms('B')}  className={ filteredRoom === 'B' && 'active' }>B Room</MDBBtn>
+        <MDBBtn color="warning" onClick={() => this.filterRooms('C')}  className={ filteredRoom === 'C' && 'active'}>C Room</MDBBtn>
       </MDBBtnGroup>
 
         <FullCalendar
