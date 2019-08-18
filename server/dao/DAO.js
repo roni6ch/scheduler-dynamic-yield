@@ -5,24 +5,20 @@ const bcrypt = require("bcrypt");
 
 const login = async (email, password) => {
   let result;
-  let resAfterPasswordCompare;
   try {
     result = await UserModel.find({ email: email }).limit(1);
   } catch (e) {
-    throw e.toString();
+    throw new Error(e.toString());
   }
   if (result.length === 0) {
-    throw "User Not Found";
+    throw new Error("User Not Found");
   }
-  let hashPassword = await bcrypt.hashSync(password, 10);
-  await bcrypt.compare(hashPassword, result[0].password, function(err, res) {
-    if (err) {
-      throw "Incorrect Password";
-    }
-    resAfterPasswordCompare = result[0];
-  });
+  if(bcrypt.compareSync(password,result[0].password)) {
+    return result[0];
+   } else {
+    throw new Error("Incorrect Password");
+   }
 
-  return resAfterPasswordCompare;
 };
 const signUser = async (name, family, email, password) => {
   let result;
