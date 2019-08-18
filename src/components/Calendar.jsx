@@ -18,7 +18,7 @@ import {
 import "@fullcalendar/core/main.css";
 import "@fullcalendar/timegrid/main.css";
 
-const serverUrl = "https://scheduler-dynamic-yield.herokuapp.com/";
+const serverUrl = "https://scheduler-dynamic-yield.herokuapp.com";
 class Calendar extends React.Component {
   constructor(props) {
     super(props);
