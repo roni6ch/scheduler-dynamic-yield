@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
+import properties from './properties';
 
-const serverUrl = "https://scheduler-dynamic-yield.herokuapp.com";
 class AuthForm extends React.Component {
   constructor(props) {
     super(props);
@@ -19,7 +19,7 @@ class AuthForm extends React.Component {
       email,
       password
     };
-    fetch(`${serverUrl}/signUser`, {
+    fetch(`${properties.serverUrl}/signUser`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

@@ -5,6 +5,7 @@ import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import moment from "moment";
+import properties from './properties';
 import {
   MDBInput,
   MDBBtn,
@@ -18,7 +19,6 @@ import {
 import "@fullcalendar/core/main.css";
 import "@fullcalendar/timegrid/main.css";
 
-const serverUrl = "https://scheduler-dynamic-yield.herokuapp.com";
 class Calendar extends React.Component {
   constructor(props) {
     super(props);
@@ -36,7 +36,7 @@ class Calendar extends React.Component {
 
   //get events
   componentDidMount() {
-    fetch(`${serverUrl}/getEvents`, {
+    fetch(`${properties.serverUrl}/getEvents`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
@@ -79,7 +79,7 @@ class Calendar extends React.Component {
     if (newEventName === "" || checkedRoom === "")
      this.setState({ modalError: true });
     else if (newEvent) {
-      fetch(`${serverUrl}/addEvent`, {
+      fetch(`${properties.serverUrl}/addEvent`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -113,7 +113,7 @@ class Calendar extends React.Component {
   };
   //update event
   updateEvent = event => {
-    fetch(`${serverUrl}/editEvent`, {
+    fetch(`${properties.serverUrl}/editEvent`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
@@ -161,7 +161,7 @@ class Calendar extends React.Component {
     let event = {
       id: this.state.edittedEvent.extendedProps._id
     };
-    fetch(`${serverUrl}/deleteEvent`, {
+    fetch(`${properties.serverUrl}/deleteEvent`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

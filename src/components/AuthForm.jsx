@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import properties from './properties';
 import {
   MDBContainer,
   MDBRow,
@@ -12,7 +13,6 @@ import {
   MDBInput
 } from "mdbreact";
 
-const serverUrl = "https://scheduler-dynamic-yield.herokuapp.com";
 class AuthForm extends React.Component {
 
   constructor(props) {
@@ -38,7 +38,7 @@ class AuthForm extends React.Component {
       password
     };
     this.setState({error:false});
-    fetch(`${serverUrl}/login`, {
+    fetch(`${properties.serverUrl}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
