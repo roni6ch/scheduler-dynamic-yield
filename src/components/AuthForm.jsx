@@ -12,7 +12,7 @@ import {
   MDBInput
 } from "mdbreact";
 
-const serverUrl = "http://localhost:8000";
+const serverUrl = "https://scheduler-dynamic-yield.herokuapp.com/";
 class AuthForm extends React.Component {
 
   constructor(props) {

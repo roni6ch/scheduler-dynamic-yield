@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
-const serverUrl = "http://localhost:8000";
+const serverUrl = "https://scheduler-dynamic-yield.herokuapp.com/";
 class AuthForm extends React.Component {
   constructor(props) {
     super(props);
